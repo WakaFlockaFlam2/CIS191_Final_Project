@@ -1,11 +1,12 @@
-#!/usr/bin/python
+#! /usr/bin/python
+
 # -*- coding: iso-8859-1 -*-
 try:
     import wx
-    import subprocess
+    import os
+
 except ImportError:
     raise ImportError,"The wxPython module is required to run this program"
-
 class simpleapp_wx(wx.Frame):
     def __init__(self,parent,id,title):
         wx.Frame.__init__(self,parent,id,title)
@@ -15,11 +16,8 @@ class simpleapp_wx(wx.Frame):
     def initialize(self):
         sizer = wx.GridBagSizer()
 
-        self.entry = wx.TextCtrl(self,-1,value=u"Enter text here.")
-        sizer.Add(self.entry,(0,0),(1,1),wx.EXPAND)
-
-        button = wx.Button(self,-1,label="Click me !")
-        sizer.Add(button, (0,1))
+        jpg = wx.Image('ros_install_header.jpg', wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
+        wx.StaticBitmap(self, -1, jpg, (0, 0))
 
         self.label = wx.StaticText(self,-1,label=u'Hello !')
         self.label.SetBackgroundColour(wx.BLUE)
@@ -30,8 +28,9 @@ class simpleapp_wx(wx.Frame):
         self.Show(True)
 
 if __name__ == "__main__":
-    subprocess.Popen("echo hello")
+    os.system("mkdir /home/jake/Desktop/test")
     app = wx.App()
     frame = simpleapp_wx(None,-1,'my application')
+    frame.SetSize(wx.Size(1000,700))
     app.MainLoop()
 
