@@ -18,7 +18,7 @@ class simpleapp_wx(wx.Frame):
         self.progText.SetLabel("System is up to date for ROS...")
         os.system("gnome-terminal -e 'sudo apt-get update'")
         self.g1.SetValue(30)
-        os.system("gnome-terminal -e 'sudo apt-get install ros-" + self.box.GetStringSelection() + "-" + self.libs.GetStringSelection() + " && sudo rosdep init && rosdep update && echo \"source /opt/ros/indigo/setup.bash\" >> ~/.bashrc && source ~/.bashrc && sudo apt-get install python-rosinstall'")
+        os.system("sudo apt-get install ros-" + self.box.GetStringSelection() + "-" + self.libs.GetStringSelection() + " && sudo rosdep init && rosdep update && echo 'source /opt/ros/indigo/setup.bash' >> ~/.bashrc && source ~/.bashrc && sudo apt-get install python-rosinstall")
         self.g1.SetValue(60)
 
     def onRadioBox(self,e): 
@@ -36,6 +36,13 @@ class simpleapp_wx(wx.Frame):
     def initialize(self):
         jpg = wx.Image('ros_install_header.jpg', wx.BITMAP_TYPE_JPEG).ConvertToBitmap()
         wx.StaticBitmap(self, -1, jpg, (0, 0))
+
+        osi = wx.Image('osilogo.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        wx.StaticBitmap(self, -1, osi, (600, 462), size=(100,100))
+
+        xkcd = wx.Image('xkcd.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        wx.StaticText(self, -1, "Obligatory  xkcd", (762, 308))
+        wx.StaticBitmap(self, -1, xkcd, (725, 325))
         
         self.box = wx.RadioBox(self, -1, "ROS Distro        ", pos=(55,225), choices=["kinetic", "jade", "indigo", "hydro", "groovy", "fuerte"], style=wx.VERTICAL)
         self.box.Bind(wx.EVT_RADIOBOX,self.onRadioBox)
@@ -44,7 +51,7 @@ class simpleapp_wx(wx.Frame):
 
         self.libs = wx.RadioBox(self, -1, "ROS Version        ", pos=(280,225), choices=["desktop-full", "desktop", "ros-base"], style=wx.VERTICAL)
         self.libs.Bind(wx.EVT_RADIOBOX,self.onLibsBox)
-        wx.StaticText(self, -1, "Choose 'full-desktop' unless you\nare short on storage.", (280, 350))
+        wx.StaticText(self, -1, "Choose 'full-desktop' unless\nyou are short on storage.", (280, 350))
 
         self.workspace = wx.CheckBox(self, -1, label="Initialize workspace", pos=(505, 225))
         self.workspace.SetValue(True)
