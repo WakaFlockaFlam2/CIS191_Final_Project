@@ -5,6 +5,7 @@ try:
     import wx
     import os
     import sys
+    import lsb_release
 except ImportError:
     raise ImportError,"The wxPython module is required to run this program"
 class simpleapp_wx(wx.Frame):
@@ -15,11 +16,24 @@ class simpleapp_wx(wx.Frame):
     def quit(self, event):
         sys.exit()
     def update(self, event):
-        self.progText.SetLabel("System is up to date for ROS...")
-        os.system("gnome-terminal -e 'sudo apt-get update'")
-        self.g1.SetValue(30)
-        os.system("sudo apt-get install ros-" + self.box.GetStringSelection() + "-" + self.libs.GetStringSelection() + " && sudo rosdep init && rosdep update && echo 'source /opt/ros/indigo/setup.bash' >> ~/.bashrc && source ~/.bashrc && sudo apt-get install python-rosinstall")
-        self.g1.SetValue(60)
+        print
+        self.progText.SetLabel("Install Progress:")
+        if self.box.GetStringSelection() == "hydro" or self.box.GetStringSelection() == "groovy" or self.box.GetStringSelection() == "fuerte":
+            self.progText.SetLabel("This is an old, deprecated version of ROS. Please select a newer version for install.")
+        elif self.box.GetStringSelection() == "kinetic" and (lsb_release.get_lsb_information().get('RELEASE') != "15.10" and lsb_release.get_lsb_information().get('RELEASE') != "16.04"):
+            self.progText.SetLabel("You must be on Ubuntu 15.10 or 16.04 for this distro")
+        elif self.box.GetStringSelection() == "jade" and (lsb_release.get_lsb_information().get('RELEASE') != "14.04" and lsb_release.get_lsb_information().get('RELEASE') != "14.10" or lsb_release.get_lsb_information().get('RELEASE') != "15.10"):
+            self.progText.SetLabel("You must be on Ubuntu 14.04 or 14.10 or 15.10 for this distro")
+        elif self.box.GetStringSelection() == "indigo" and (lsb_release.get_lsb_information().get('RELEASE') != "13.10" and lsb_release.get_lsb_information().get('RELEASE') != "14.04"):
+            self.progText.SetLabel("You must be on Ubuntu 13.10 or 14.04 for this distro")
+        else:
+            self.progText.SetLabel("System is up to date for ROS...")
+            os.system("gnome-terminal -e 'sudo apt-get update'")
+            self.g1.SetValue(30)
+            os.system("sudo apt-get install ros-" + self.box.GetStringSelection() + "-" + self.libs.GetStringSelection() + " && sudo rosdep init && rosdep update && echo 'source /opt/ros/indigo/setup.bash' >> ~/.bashrc && source ~/.bashrc && sudo apt-get install python-rosinstall && mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/src && catkin_init_workspace")
+            if self.tuts.GetLabel():
+                os.system("gnome-terminal -e 'sudo apt-get install ros-" + self.box.GetStringSelection() + "-ros-tutorials'")
+            self.g1.SetValue(60)
 
     def onRadioBox(self,e): 
         print self.box.GetStringSelection()
