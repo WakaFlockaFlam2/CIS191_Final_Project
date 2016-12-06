@@ -8,4 +8,4 @@ enter your password and run main.py again after the module finishes successfully
 
 The functionality of this tool is pretty straightforward. Check the boxes as you wish, depending on what parameters you want your ROS installation to have. If you attempt to install a ROS distro that you shouldn't, the GUI will change the message on the status bar to notify you.
 
-This tool if free and open-source. It was developed by Jacob Beckerman at the University of Pennsylvania as a final project for CIS 191. I take no responsibility for any damage caused to your computer as a result of using this tool.
+This tool is free and open-source. It was developed by Jacob Beckerman at the University of Pennsylvania as a final project for CIS 191. I take no responsibility for any damage caused to your computer as a result of using this tool.
