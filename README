@@ -1,3 +1,5 @@
+Developed by Jacob Beckerman at the University of Pennsylvania.
+
 This tool is made to help you install ROS (Robot operating System)on Ubuntu. Download the repo as a zip and uncompress then run main.py. The only non-standard dependancy is the wxpython module for graphics, which may be installed already on your computer.
 
 If you run into trouble with the GUI, press CTRL + ALT + T to open a terminal window then enter:
